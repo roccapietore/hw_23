@@ -1,11 +1,10 @@
 def get_query(file, query):
     file = map(lambda x: x.strip(), file)
     result = ""
-    query_parameters = query.split("|")
-    for item in query_parameters:
-        query_request = item.split(":")
-        command = query_request[0]
-        argument = query_request[1]
+    request_dict = make_dictionary(query)
+    print(request_dict)
+
+    for command, argument in request_dict.items():
         if command == "filter":
             result = list(filter(lambda x, txt=argument: argument in x, file))
         elif command == "map":
@@ -20,6 +19,16 @@ def get_query(file, query):
         elif command == "limit":
             obj = int(argument)
             result = list(file)[:obj]
-        return result
+
+    return result
+
+
+def make_dictionary(parameter):
+    dictionary = {}
+    parameters = parameter.split("|")
+    for item in parameters:
+        query_request = item.split(":")
+        dictionary[query_request[0]] = query_request[1]
+    return dictionary
 
 
