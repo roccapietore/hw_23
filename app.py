@@ -18,19 +18,14 @@ class Validator(Schema):
 @app.route("/perform_query")
 def perform_query():
     try:
-        query = request.args["query"]
-        file_name = request.args["file_name"]
         data = Validator().load(request.args)
-        if not data:
-            raise ValidationError
-
-        file_ = os.path.join(DATA_DIR, file_name)
+        file_ = os.path.join(DATA_DIR, data['file_name'])
         if not file_:
             raise FileExistsError
 
         with open(file_, "r") as file:
-            data = file.readlines()
-        result = get_query(data, query)
+            file_read = file.readlines()
+        result = get_query(file_read, data['query'])
         return app.response_class(result, content_type="text/plain")
 
     except (KeyError, IndexError, IsADirectoryError, FileExistsError, ValidationError):
@@ -38,4 +33,4 @@ def perform_query():
 
 
 if __name__ == "__main__":
-    app.run(port=5006)
+    app.run(port=5004)
