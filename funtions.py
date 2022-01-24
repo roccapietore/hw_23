@@ -1,13 +1,14 @@
 def get_query(data_list, query):
-
     file = map(lambda x: x.strip(), data_list)
     result = []
     request_dict = make_dictionary(query)
-    print(request_dict)
 
     for command, argument in request_dict.items():
-        result = run_command(command, argument, file)
-        print(result)
+        if not result:
+            data = file
+        else:
+            data = result
+        result = run_command(command, argument, data)
     return result
 
 
