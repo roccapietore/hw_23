@@ -1,6 +1,7 @@
 import os
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask_restx import abort
+
 from funtions import get_query
 from marshmallow import Schema, fields, ValidationError
 
@@ -16,7 +17,7 @@ class Validator(Schema):
 
 
 @app.route("/perform_query")
-def perform_query():
+def perform_query() -> Response:
     try:
         data = Validator().load(request.args)
         file_ = os.path.join(DATA_DIR, data['file_name'])
@@ -33,4 +34,4 @@ def perform_query():
 
 
 if __name__ == "__main__":
-    app.run(port=5004)
+    app.run(port=5001)

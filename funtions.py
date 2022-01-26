@@ -1,6 +1,10 @@
-def get_query(data_list, query):
-    file = map(lambda x: x.strip(), data_list)
-    result = []
+import re
+from typing import List, Iterable
+
+
+def get_query(data_list: List[str], query: str) -> List[str]:
+    file: Iterable[str] = map(lambda x: x.strip(), data_list)
+    result: List[str] = []
     request_dict = make_dictionary(query)
 
     for command, argument in request_dict.items():
@@ -12,7 +16,7 @@ def get_query(data_list, query):
     return result
 
 
-def make_dictionary(parameter):
+def make_dictionary(parameter: str) -> dict:
     dictionary = {}
     for item in parameter.split("|"):
         command, argument = item.split(":")
@@ -20,13 +24,13 @@ def make_dictionary(parameter):
     return dictionary
 
 
-def run_command(command, argument, file):
+def run_command(command: str, argument: str, file: Iterable) -> List[str]:
     if command == "filter":
         return list(filter(lambda x, txt=argument: argument in x, file))
     elif command == "map":
         return list(map(lambda x, index=argument: x.split(" ")[index], file))
     elif command == "unique":
-        return set(file)
+        return list(set(file))
     elif command == "sort":
         if argument == "asc":
             return sorted(file, reverse=False)
@@ -35,3 +39,6 @@ def run_command(command, argument, file):
     elif command == "limit":
         obj = int(argument)
         return list(file)[:obj]
+    elif command == "regex":
+        regex = re.compile(argument)
+        return list(filter(lambda x: regex.findall(x),  file))
