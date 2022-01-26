@@ -24,7 +24,7 @@ def make_dictionary(parameter: str) -> dict:
     return dictionary
 
 
-def run_command(command: str, argument: str, file: Iterable) -> List[str]:
+def run_command(command: str, argument: str, file: Iterable) -> Optional[List[str]]:
     if command == "filter":
         return list(filter(lambda x, txt=argument: argument in x, file))
     elif command == "map":
