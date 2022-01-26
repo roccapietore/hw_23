@@ -1,10 +1,10 @@
 import re
-from typing import List, Iterable
+from typing import List, Iterable, Optional
 
 
-def get_query(data_list: List[str], query: str) -> List[str]:
+def get_query(data_list: List[str], query: str) -> Optional[List[str]]:
     file: Iterable[str] = map(lambda x: x.strip(), data_list)
-    result: List[str] = []
+    result: Optional[List[str]] = []
     request_dict = make_dictionary(query)
 
     for command, argument in request_dict.items():
@@ -42,3 +42,4 @@ def run_command(command: str, argument: str, file: Iterable) -> List[str]:
     elif command == "regex":
         regex = re.compile(argument)
         return list(filter(lambda x: regex.findall(x),  file))
+

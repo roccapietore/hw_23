@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, Response
-from flask_restx import abort
+from werkzeug.exceptions import BadRequest
 
 from funtions import get_query
 from marshmallow import Schema, fields, ValidationError
@@ -30,7 +30,7 @@ def perform_query() -> Response:
         return app.response_class(result, content_type="text/plain")
 
     except (KeyError, IndexError, IsADirectoryError, FileExistsError, ValidationError):
-        abort(400), 'error'
+        raise BadRequest(description='error')
 
 
 if __name__ == "__main__":
