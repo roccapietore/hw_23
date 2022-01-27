@@ -26,12 +26,13 @@ def perform_query() -> Response:
 
         with open(file_, "r") as file:
             file_read = file.readlines()
+
         result = get_query(file_read, data['query'])
         return app.response_class(result, content_type="text/plain")
 
-    except (KeyError, IndexError, IsADirectoryError, FileExistsError, ValidationError):
+    except (KeyError, IndexError, IsADirectoryError, FileExistsError, ValidationError, NotImplementedError):
         raise BadRequest(description='error')
 
 
 if __name__ == "__main__":
-    app.run(port=5001)
+    app.run(port=5000)

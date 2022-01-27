@@ -26,9 +26,9 @@ def make_dictionary(parameter: str) -> dict:
 
 def run_command(command: str, argument: str, file: Iterable) -> Optional[List[str]]:
     if command == "filter":
-        return list(filter(lambda x, txt=argument: argument in x, file))
+        return list(filter(lambda x: argument in x, file))
     elif command == "map":
-        return list(map(lambda x, index=argument: x.split(" ")[index], file))
+        return list(map(lambda x: x.split(" ")[int(argument)], file))
     elif command == "unique":
         return list(set(file))
     elif command == "sort":
@@ -42,4 +42,5 @@ def run_command(command: str, argument: str, file: Iterable) -> Optional[List[st
     elif command == "regex":
         regex = re.compile(argument)
         return list(filter(lambda x: regex.findall(x),  file))
+    raise NotImplementedError('Method not allowed')
 
