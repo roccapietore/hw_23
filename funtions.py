@@ -4,7 +4,7 @@ from typing import List, Iterable, Optional, Dict
 
 def get_query(data_list: List[str], query: str) -> List[str]:
     file: Iterable[str] = map(lambda x: x.strip(), data_list)
-    result: Optional[List[str]] = []
+    result: List[str] = []
     request_dict = make_dictionary(query)
 
     for command, argument in request_dict.items():
