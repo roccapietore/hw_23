@@ -1,8 +1,8 @@
 import re
-from typing import List, Iterable, Optional
+from typing import List, Iterable, Optional, Dict
 
 
-def get_query(data_list: List[str], query: str) -> Optional[List[str]]:
+def get_query(data_list: List[str], query: str) -> List[str]:
     file: Iterable[str] = map(lambda x: x.strip(), data_list)
     result: Optional[List[str]] = []
     request_dict = make_dictionary(query)
@@ -16,7 +16,7 @@ def get_query(data_list: List[str], query: str) -> Optional[List[str]]:
     return result
 
 
-def make_dictionary(parameter: str) -> dict:
+def make_dictionary(parameter: str) -> Dict[str, str]:
     dictionary = {}
     for item in parameter.split("|"):
         command, argument = item.split(":")
@@ -24,7 +24,7 @@ def make_dictionary(parameter: str) -> dict:
     return dictionary
 
 
-def run_command(command: str, argument: str, file: Iterable) -> Optional[List[str]]:
+def run_command(command: str, argument: str, file: Iterable) -> List[str]:
     if command == "filter":
         return list(filter(lambda x: argument in x, file))
     elif command == "map":
